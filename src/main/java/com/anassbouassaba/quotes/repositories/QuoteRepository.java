@@ -1,17 +1,26 @@
 package com.anassbouassaba.quotes.repositories;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import com.anassbouassaba.quotes.entities.Quote;
 
-@RepositoryRestResource(collectionResourceRel = "quotes", path = "quotes")
 public interface QuoteRepository extends PagingAndSortingRepository<Quote, Long> {
+  Quote findTopByOrderByCreatedAtDesc();
+  
+  @Query("select q from Quote q order by votes desc")
+  List<Quote> top(Pageable pageable);
+  
+  @Query("select q from Quote q order by votes asc")
+  List<Quote> flop(Pageable pageable);
+  
   @Transactional
   @Modifying
   @Query("update Quote set votes = votes + 1 where id = :id")
