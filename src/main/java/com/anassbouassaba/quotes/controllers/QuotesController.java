@@ -3,6 +3,8 @@ package com.anassbouassaba.quotes.controllers;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -30,7 +32,7 @@ public class QuotesController {
   UserRepository userRepository;
   
   @PostMapping
-  public QuoteDto create(@RequestBody CreateQuoteDto body) {    
+  public QuoteDto create(@Valid @RequestBody CreateQuoteDto body) {    
     Quote quote = new Quote();
     quote.setContent(body.getContent());
     quote.setVotes(0);

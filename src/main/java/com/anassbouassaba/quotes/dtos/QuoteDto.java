@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class QuoteDto {
-  private Long id;
+  private String id;
   private String content;
   private Integer votes;
   private String user;
@@ -14,7 +14,7 @@ public class QuoteDto {
   public QuoteDto() {}
   
   public QuoteDto(Quote quote) {
-    this.id = quote.getId();
+    this.id = quote.getId().toString();
     this.content = quote.getContent();
     this.votes = quote.getVotes();
     if (quote.getUser() != null) {
