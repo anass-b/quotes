@@ -4,36 +4,33 @@ import java.util.Calendar;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import lombok.Data;
 
 @Entity
 @Data
-public class Quote {
+public class VoteSnapshot {
   @Id
-  @GeneratedValue(strategy=GenerationType.AUTO)
+  @GeneratedValue
   private long id;
   
-  private String content;
-  
   private long upvotes;
-  
+
   private long downvotes;
   
-  @OneToOne
-  @JoinColumn(name = "user_id")
-  private AppUser appUser;
+  private long quoteId;
   
   @CreationTimestamp
   private Calendar createdAt;
-  
-  @UpdateTimestamp
-  private Calendar updatedAt;
+
+  public VoteSnapshot() {}
+
+  public VoteSnapshot(Quote quote) {
+    quoteId = quote.getId();
+    downvotes = quote.getDownvotes();
+    upvotes = quote.getUpvotes();
+  }
 }

@@ -8,17 +8,43 @@ import lombok.Data;
 public class QuoteDto {
   private String id;
   private String content;
-  private Integer votes;
+  private String upvotes;
+  private long upvotesValue;
+  private String downvotes;
+  private long downvotesValue;
   private String user;
   
   public QuoteDto() {}
   
   public QuoteDto(Quote quote) {
-    this.id = quote.getId().toString();
-    this.content = quote.getContent();
-    this.votes = quote.getVotes();
-    if (quote.getUser() != null) {
-      this.user = quote.getUser().getUsername();
+    id = Long.toString(quote.getId());
+    content = quote.getContent();
+    upvotes = upvotesToString(quote.getUpvotes());
+    upvotesValue = quote.getUpvotes();
+    downvotes = downvotesToString(quote.getDownvotes());
+    downvotesValue = quote.getDownvotes();
+    if (quote.getAppUser() != null) {
+      user = quote.getAppUser().getUsername();
     }
+  }
+
+  public static String upvotesToString(long votes) {
+    String result = "";
+    if (votes > 0) {
+      result += "+";
+    }
+    result += Long.toString(votes);
+
+    return result;
+  }
+
+  public static String downvotesToString(long votes) {
+    String result = "";
+    if (votes > 0) {
+      result += "-";
+    }
+    result += Long.toString(votes);
+
+    return result;
   }
 }

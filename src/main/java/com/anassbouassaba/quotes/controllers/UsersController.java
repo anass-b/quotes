@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.anassbouassaba.quotes.dtos.CreateUserDto;
 import com.anassbouassaba.quotes.dtos.UserDto;
-import com.anassbouassaba.quotes.entities.User;
+import com.anassbouassaba.quotes.entities.AppUser;
 import com.anassbouassaba.quotes.repositories.UserRepository;
 
 @RestController
@@ -19,7 +19,7 @@ public class UsersController {
   
   @PostMapping
   public UserDto create(@RequestBody CreateUserDto body) {
-    User user = new User();
+    AppUser user = new AppUser();
     user.setFullName(body.getFullName());
     user.setUsername(body.getUsername());
     user.setPassword(body.getPassword());

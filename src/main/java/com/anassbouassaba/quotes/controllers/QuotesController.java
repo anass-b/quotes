@@ -1,6 +1,8 @@
 package com.anassbouassaba.quotes.controllers;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -18,27 +20,32 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.anassbouassaba.quotes.dtos.CreateQuoteDto;
 import com.anassbouassaba.quotes.dtos.QuoteDto;
+import com.anassbouassaba.quotes.dtos.VoteSnapshotDto;
 import com.anassbouassaba.quotes.entities.Quote;
+import com.anassbouassaba.quotes.entities.VoteSnapshot;
 import com.anassbouassaba.quotes.repositories.QuoteRepository;
-import com.anassbouassaba.quotes.repositories.UserRepository;
+import com.anassbouassaba.quotes.repositories.VoteSnaphotRepository;
 
 @RestController
 @RequestMapping("quotes")
 public class QuotesController {
   @Autowired
-  QuoteRepository quoteRepository;
+  private QuoteRepository quoteRepository;
   
   @Autowired
-  UserRepository userRepository;
+  private VoteSnaphotRepository voteCountRepository;
   
   @PostMapping
   public QuoteDto create(@Valid @RequestBody CreateQuoteDto body) {    
     Quote quote = new Quote();
     quote.setContent(body.getContent());
-    quote.setVotes(0);
     
     quoteRepository.save(quote);
-        
+    
+    VoteSnapshot voteCount = new VoteSnapshot();
+    voteCount.setQuoteId(quote.getId());
+    voteCountRepository.save(voteCount);
+
     return new QuoteDto(quote);
   }
   
@@ -70,12 +77,38 @@ public class QuotesController {
   @PostMapping("{id}/upvote")
   public ResponseEntity<?> upvote(@PathVariable("id") Long id) {
     quoteRepository.upvote(id);
+    
+    Optional<Quote> quote = quoteRepository.findById(id);
+    
+    VoteSnapshot voteCount = new VoteSnapshot(quote.get());
+    voteCountRepository.save(voteCount);
+    
     return new ResponseEntity<>(null, HttpStatus.OK);
   }
   
   @PostMapping("{id}/downvote")
-  public ResponseEntity<?> downvote(@PathVariable("id") Long id) {
+  public ResponseEntity<?> downvote(@PathVariable("id") Long id) {    
     quoteRepository.downvote(id);
+    
+    Optional<Quote> quote = quoteRepository.findById(id);
+    
+    VoteSnapshot voteCount = new VoteSnapshot(quote.get());
+    voteCountRepository.save(voteCount);
+
     return new ResponseEntity<>(null, HttpStatus.OK);
+  }
+  
+  @GetMapping("{id}/vote-snapshots/{count}")
+  public ResponseEntity<?> voteHistory(
+      @PathVariable("id") Long id,
+      @PathVariable("count") Integer count) {
+    List<VoteSnapshotDto> result = voteCountRepository.findByQuoteId(id, PageRequest.of(0, count))
+        .stream()
+        .map(x -> new VoteSnapshotDto(x))
+        .collect(Collectors.toList());
+    
+    Collections.reverse(result);
+      
+    return new ResponseEntity<>(result, HttpStatus.OK);
   }
 }

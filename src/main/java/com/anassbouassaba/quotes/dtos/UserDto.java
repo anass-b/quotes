@@ -1,22 +1,22 @@
 package com.anassbouassaba.quotes.dtos;
 
-import com.anassbouassaba.quotes.entities.User;
+import com.anassbouassaba.quotes.entities.AppUser;
 
 import lombok.Data;
 
 @Data
 public class UserDto {
-  private Long id;
+  private String id;
   private String fullName;
   private String username;
   private String role;
 
   public UserDto() {}
 
-  public UserDto(User user) {
-    this.id = user.getId();
-    this.username = user.getUsername();
-    this.fullName = user.getFullName();
-    this.role = user.getRole();
+  public UserDto(AppUser user) {
+    id = user.getId().toString();
+    username = user.getUsername();
+    fullName = user.getFullName();
+    role = user.getRole();
   }
 }
