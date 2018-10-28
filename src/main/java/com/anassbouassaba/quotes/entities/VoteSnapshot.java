@@ -5,12 +5,16 @@ import java.sql.Timestamp;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 
 import lombok.Data;
 
 @Entity
+@Table(name = "vote_snapshots")
 @Data
 public class VoteSnapshot {
   @Id
@@ -21,7 +25,9 @@ public class VoteSnapshot {
 
   private long downvotes;
   
-  private long quoteId;
+  @OneToOne
+  @JoinColumn(name = "quote_id")
+  private Quote quote;
   
   @CreationTimestamp
   private Timestamp createdAt;
@@ -29,8 +35,8 @@ public class VoteSnapshot {
   public VoteSnapshot() {}
 
   public VoteSnapshot(Quote quote) {
-    quoteId = quote.getId();
-    downvotes = quote.getDownvotes();
-    upvotes = quote.getUpvotes();
+    this.quote = quote;
+    this.downvotes = quote.getDownvotes();
+    this.upvotes = quote.getUpvotes();
   }
 }

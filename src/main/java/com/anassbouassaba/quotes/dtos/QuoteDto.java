@@ -3,8 +3,10 @@ package com.anassbouassaba.quotes.dtos;
 import com.anassbouassaba.quotes.entities.Quote;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class QuoteDto {
   private String id;
   private String content;
@@ -14,8 +16,6 @@ public class QuoteDto {
   private long downvotesValue;
   private String user;
   
-  public QuoteDto() {}
-  
   public QuoteDto(Quote quote) {
     id = Long.toString(quote.getId());
     content = quote.getContent();
@@ -23,8 +23,8 @@ public class QuoteDto {
     upvotesValue = quote.getUpvotes();
     downvotes = downvotesToString(quote.getDownvotes());
     downvotesValue = quote.getDownvotes();
-    if (quote.getAppUser() != null) {
-      user = quote.getAppUser().getUsername();
+    if (quote.getUser() != null) {
+      user = quote.getUser().getUsername();
     }
   }
 

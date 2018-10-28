@@ -1,6 +1,7 @@
 package com.anassbouassaba.quotes.controllers;
 
 import java.math.BigInteger;
+import java.security.Principal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,9 +18,11 @@ import com.anassbouassaba.quotes.dtos.CreateQuoteDto;
 import com.anassbouassaba.quotes.dtos.QuoteDto;
 import com.anassbouassaba.quotes.dtos.VoteHistoryItemDto;
 import com.anassbouassaba.quotes.entities.Quote;
+import com.anassbouassaba.quotes.entities.User;
 import com.anassbouassaba.quotes.entities.VoteSnapshot;
 import com.anassbouassaba.quotes.mappers.VoteHistoryItem;
 import com.anassbouassaba.quotes.repositories.QuoteRepository;
+import com.anassbouassaba.quotes.repositories.UserRepository;
 import com.anassbouassaba.quotes.repositories.VoteSnaphotRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +40,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("quotes")
 public class QuotesController {
   @Autowired
+  private UserRepository userRepository;
+
+  @Autowired
   private QuoteRepository quoteRepository;
   
   @Autowired
@@ -44,17 +50,19 @@ public class QuotesController {
 
   @PersistenceContext
   private EntityManager entityManager;
-
   
   @PostMapping
-  public QuoteDto create(@Valid @RequestBody CreateQuoteDto body) {    
+  public QuoteDto create(@Valid @RequestBody CreateQuoteDto body, Principal principal) {
+    User user = userRepository.findByUsername(principal.getName());
+
     Quote quote = new Quote();
     quote.setContent(body.getContent());
+    quote.setUser(user);
     
     quoteRepository.save(quote);
     
     VoteSnapshot voteCount = new VoteSnapshot();
-    voteCount.setQuoteId(quote.getId());
+    voteCount.setQuote(quote);
     voteCountRepository.save(voteCount);
 
     return new QuoteDto(quote);

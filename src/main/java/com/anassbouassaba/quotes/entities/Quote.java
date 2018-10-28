@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -16,6 +17,7 @@ import lombok.Data;
 
 @Entity
 @Data
+@Table(name = "quotes")
 public class Quote {
   @Id
   @GeneratedValue(strategy=GenerationType.AUTO)
@@ -29,7 +31,7 @@ public class Quote {
   
   @OneToOne
   @JoinColumn(name = "user_id")
-  private AppUser appUser;
+  private User user;
   
   @CreationTimestamp
   private Timestamp createdAt;
