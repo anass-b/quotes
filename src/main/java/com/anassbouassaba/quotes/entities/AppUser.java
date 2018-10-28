@@ -1,6 +1,6 @@
 package com.anassbouassaba.quotes.entities;
 
-import java.util.Calendar;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,8 +30,8 @@ public class AppUser {
   private String role;
   
   @CreationTimestamp
-  private Calendar createdAt;
+  private Timestamp createdAt;
   
   @UpdateTimestamp
-  private Calendar updatedAt;
+  private Timestamp updatedAt;
 }

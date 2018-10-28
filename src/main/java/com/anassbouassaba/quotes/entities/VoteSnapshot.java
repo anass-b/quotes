@@ -1,6 +1,6 @@
 package com.anassbouassaba.quotes.entities;
 
-import java.util.Calendar;
+import java.sql.Timestamp;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,7 +24,7 @@ public class VoteSnapshot {
   private long quoteId;
   
   @CreationTimestamp
-  private Calendar createdAt;
+  private Timestamp createdAt;
 
   public VoteSnapshot() {}
 

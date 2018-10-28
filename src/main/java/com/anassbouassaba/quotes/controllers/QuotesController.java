@@ -1,11 +1,20 @@
 package com.anassbouassaba.quotes.controllers;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
+
+import com.anassbouassaba.quotes.dtos.CreateQuoteDto;
+import com.anassbouassaba.quotes.dtos.QuoteDto;
+import com.anassbouassaba.quotes.dtos.VoteHistoryItemDto;
+import com.anassbouassaba.quotes.entities.Quote;
+import com.anassbouassaba.quotes.entities.VoteSnapshot;
+import com.anassbouassaba.quotes.mappers.VoteHistoryItem;
+import com.anassbouassaba.quotes.repositories.QuoteRepository;
+import com.anassbouassaba.quotes.repositories.VoteSnaphotRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -17,14 +26,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.anassbouassaba.quotes.dtos.CreateQuoteDto;
-import com.anassbouassaba.quotes.dtos.QuoteDto;
-import com.anassbouassaba.quotes.dtos.VoteSnapshotDto;
-import com.anassbouassaba.quotes.entities.Quote;
-import com.anassbouassaba.quotes.entities.VoteSnapshot;
-import com.anassbouassaba.quotes.repositories.QuoteRepository;
-import com.anassbouassaba.quotes.repositories.VoteSnaphotRepository;
 
 @RestController
 @RequestMapping("quotes")
@@ -98,17 +99,15 @@ public class QuotesController {
     return new ResponseEntity<>(null, HttpStatus.OK);
   }
   
-  @GetMapping("{id}/vote-snapshots/{count}")
-  public ResponseEntity<?> voteHistory(
-      @PathVariable("id") Long id,
-      @PathVariable("count") Integer count) {
-    List<VoteSnapshotDto> result = voteCountRepository.findByQuoteId(id, PageRequest.of(0, count))
-        .stream()
-        .map(x -> new VoteSnapshotDto(x))
-        .collect(Collectors.toList());
-    
-    Collections.reverse(result);
-      
+  @GetMapping("{id}/vote-history")
+  public ResponseEntity<?> voteHistory(@PathVariable("id") Long id) {
+    List<VoteHistoryItem> consolidated = voteCountRepository.voteHistory(id);
+
+    List<VoteHistoryItemDto> result = new ArrayList<>();
+    for (VoteHistoryItem e: consolidated) {
+      result.add(new VoteHistoryItemDto(e));
+    }
+
     return new ResponseEntity<>(result, HttpStatus.OK);
   }
 }
