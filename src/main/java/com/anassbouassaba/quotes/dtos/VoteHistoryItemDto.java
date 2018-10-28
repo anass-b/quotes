@@ -14,9 +14,9 @@ public class VoteHistoryItemDto {
   public VoteHistoryItemDto() {}
   
   public VoteHistoryItemDto(VoteHistoryItem vote) {
-    upvotes = vote.getUpvotes();
-    downvotes = vote.getDownvotes();
-    delta = vote.getDelta();
+    upvotes = vote.getUpvotes().longValue();
+    downvotes = vote.getDownvotes().longValue();
+    delta = vote.getDelta().longValue();
     createdAt = vote.getCreatedAt().getTime();
   }
 }

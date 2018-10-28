@@ -1,10 +1,16 @@
 package com.anassbouassaba.quotes.controllers;
 
+import java.math.BigInteger;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.Tuple;
 import javax.validation.Valid;
 
 import com.anassbouassaba.quotes.dtos.CreateQuoteDto;
@@ -35,6 +41,10 @@ public class QuotesController {
   
   @Autowired
   private VoteSnaphotRepository voteCountRepository;
+
+  @PersistenceContext
+  private EntityManager entityManager;
+
   
   @PostMapping
   public QuoteDto create(@Valid @RequestBody CreateQuoteDto body) {    
@@ -99,15 +109,57 @@ public class QuotesController {
     return new ResponseEntity<>(null, HttpStatus.OK);
   }
   
-  @GetMapping("{id}/vote-history")
-  public ResponseEntity<?> voteHistory(@PathVariable("id") Long id) {
-    List<VoteHistoryItem> consolidated = voteCountRepository.voteHistory(id);
-
-    List<VoteHistoryItemDto> result = new ArrayList<>();
-    for (VoteHistoryItem e: consolidated) {
-      result.add(new VoteHistoryItemDto(e));
+  @GetMapping("{id}/vote-history/{unit}/{limit}")
+  public ResponseEntity<?> voteHistory(
+    @PathVariable("id") Long id,
+    @PathVariable("unit") String unit,
+    @PathVariable("limit") Integer limit) {
+    // Here we explicitly check the value of unit to avoid an SQL injection
+    if (!unit.equalsIgnoreCase("year") &&
+        !unit.equalsIgnoreCase("month") &&
+        !unit.equalsIgnoreCase("week") &&
+        !unit.equalsIgnoreCase("day") &&
+        !unit.equalsIgnoreCase("hour") &&
+        !unit.equalsIgnoreCase("minute") &&
+        !unit.equalsIgnoreCase("second")) {
+      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    return new ResponseEntity<>(result, HttpStatus.OK);
+    List<VoteHistoryItem> voteHistory = getVoteHistory(id, unit.trim().toLowerCase(), limit);
+
+    List<VoteHistoryItemDto> dtos = voteHistory.stream()
+      .map(x -> new VoteHistoryItemDto(x))
+      .collect(Collectors.toList());
+
+    return new ResponseEntity<>(dtos, HttpStatus.OK);
+  }
+
+  private List<VoteHistoryItem> getVoteHistory(Long quoteId, String unit, Integer limit) {
+    Query query = entityManager.createNativeQuery("SELECT date_trunc('" + unit + "', v.created_at) createdAt, " + 
+      "max(v.upvotes) - max(v.downvotes) delta, " +
+      "max(v.upvotes) upvotes, " +
+      "max(v.downvotes) downvotes FROM " +
+      "vote_snapshot v WHERE quote_id = :quoteId GROUP BY 1 ORDER BY createdAt DESC LIMIT :limit", Tuple.class);
+
+    query.setParameter("quoteId", quoteId);
+    query.setParameter("limit", limit);
+
+    List<VoteHistoryItem> result = new ArrayList<>();
+    
+    @SuppressWarnings("unchecked")
+    List<Tuple> tuples = query.getResultList();
+
+    for (Tuple tuple: tuples) {
+      VoteHistoryItem item = VoteHistoryItem.builder()
+        .upvotes((BigInteger)tuple.get("upvotes"))
+        .downvotes((BigInteger)tuple.get("downvotes"))
+        .delta((BigInteger)tuple.get("delta"))
+        .createdAt((Timestamp)tuple.get("createdAt"))
+        .build();
+
+      result.add(0, item);
+    }
+
+    return result;
   }
 }
