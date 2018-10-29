@@ -6,10 +6,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import lombok.Data;
 
@@ -25,8 +29,10 @@ public class VoteSnapshot {
 
   private long downvotes;
   
-  @OneToOne
+  @ManyToOne
   @JoinColumn(name = "quote_id")
+  @OnDelete(action = OnDeleteAction.CASCADE)
+  @JsonIgnore
   private Quote quote;
   
   @CreationTimestamp

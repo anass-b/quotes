@@ -18,7 +18,7 @@ public interface QuoteRepository extends PagingAndSortingRepository<Quote, Long>
   @Query("select q from Quote q order by upvotes desc")
   List<Quote> top(Pageable pageable);
   
-  @Query("select q from Quote q order by downvotes asc")
+  @Query("select q from Quote q order by downvotes desc")
   List<Quote> flop(Pageable pageable);
   
   @Transactional
