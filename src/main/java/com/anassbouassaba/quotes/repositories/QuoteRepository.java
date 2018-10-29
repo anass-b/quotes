@@ -15,10 +15,10 @@ import com.anassbouassaba.quotes.entities.Quote;
 public interface QuoteRepository extends PagingAndSortingRepository<Quote, Long> {
   Quote findTopByOrderByCreatedAtDesc();
   
-  @Query("select q from Quote q order by upvotes desc")
+  @Query("select q from Quote q order by (upvotes - downvotes) desc")
   List<Quote> top(Pageable pageable);
   
-  @Query("select q from Quote q order by downvotes desc")
+  @Query("select q from Quote q order by (downvotes - upvotes) desc")
   List<Quote> flop(Pageable pageable);
   
   @Transactional
