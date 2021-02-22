@@ -1,16 +1,4 @@
-@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
+/* You can add global styles to this file, and also import other style files */
 
-$fa-font-path: "../node_modules/@fortawesome/fontawesome-free/webfonts";
-@import "../node_modules/@fortawesome/fontawesome-free/scss/fontawesome";
-@import "../node_modules/@fortawesome/fontawesome-free/scss/solid";
-@import "../node_modules/@fortawesome/fontawesome-free/scss/brands";
-@import "../node_modules/@fortawesome/fontawesome-free/scss/regular";
-
-html {
-  height: 100%;
-}
-
-body {
-  margin: 0;
-  height: 100%;
-}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
