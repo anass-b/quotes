@@ -1,5 +1,5 @@
-import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Component } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 import { Quote } from '../dtos/Quote';
 import { AppService } from '../app.service';
 
@@ -18,8 +18,9 @@ export class AddQuoteDialogComponent {
   error: string;
 
   constructor(
-    private readonly appService: AppService,
-    private readonly dialogRef: MatDialogRef<AddQuoteDialogComponent>) {}
+      private readonly appService: AppService,
+      private readonly dialogRef: MatDialogRef<AddQuoteDialogComponent>) {
+  }
 
   onOkClick() {
     if (!this.content) {
@@ -29,14 +30,14 @@ export class AddQuoteDialogComponent {
 
     this.progress = true;
     this.appService.create({content: this.content})
-      .then((quote: Quote) => {
-        this.progress = false;
-        this.dialogRef.close();
-      })
-      .catch(() => {
-        this.progress = false;
-        this.error = 'An error occurred.';
-      });
+        .then((quote: Quote) => {
+          this.progress = false;
+          this.dialogRef.close();
+        })
+        .catch(() => {
+          this.progress = false;
+          this.error = 'An error occurred.';
+        });
   }
 
   onNoClick(): void {

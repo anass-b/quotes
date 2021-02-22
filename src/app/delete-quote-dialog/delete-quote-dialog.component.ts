@@ -14,23 +14,23 @@ export class DeleteQuoteDialogComponent {
   quote: Quote;
 
   constructor(
-    private readonly appService: AppService,
-    private readonly dialogRef: MatDialogRef<DeleteQuoteDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) {
+      private readonly appService: AppService,
+      private readonly dialogRef: MatDialogRef<DeleteQuoteDialogComponent>,
+      @Inject(MAT_DIALOG_DATA) public data: any) {
     this.quote = this.data.quote;
   }
 
   onOkClick() {
     this.progress = true;
     this.appService.delete(this.data.quote.id)
-      .then(() => {
-        this.progress = false;
-        this.dialogRef.close();
-      })
-      .catch(() => {
-        this.progress = false;
-        this.error = 'An error occurred.';
-      });
+        .then(() => {
+          this.progress = false;
+          this.dialogRef.close();
+        })
+        .catch(() => {
+          this.progress = false;
+          this.error = 'An error occurred.';
+        });
   }
 
   onNoClick(): void {

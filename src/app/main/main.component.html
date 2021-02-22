@@ -9,7 +9,7 @@
   </button>
   <button mat-button *ngIf="user" [matMenuTriggerFor]="menu">{{user.profile.fullName}}</button>
   <mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="signout()">Sign out</button>
+    <button mat-menu-item (click)="signOut()">Sign out</button>
   </mat-menu>
 </mat-toolbar>
 

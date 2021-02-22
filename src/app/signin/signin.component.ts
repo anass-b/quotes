@@ -17,19 +17,20 @@ export class SigninComponent {
   progress = false;
 
   constructor(
-    private readonly appService: AppService,
-    private readonly router: Router) { }
+      private readonly appService: AppService,
+      private readonly router: Router) {
+  }
 
   onSubmit() {
     this.progress = true;
     this.appService.signIn(this.model.username, this.model.password)
-      .then(() => {
-        this.progress = false;
-        this.router.navigate(['/']);
-      })
-      .catch(() => {
-        this.progress = false;
-      });
+        .then(() => {
+          this.progress = false;
+          this.router.navigate(['/']);
+        })
+        .catch(() => {
+          this.progress = false;
+        });
   }
 
   signup() {

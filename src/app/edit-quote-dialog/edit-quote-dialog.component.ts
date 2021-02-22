@@ -13,9 +13,9 @@ export class EditQuoteDialogComponent {
   content: string;
 
   constructor(
-    private readonly appService: AppService,
-    private readonly dialogRef: MatDialogRef<EditQuoteDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) {
+      private readonly appService: AppService,
+      private readonly dialogRef: MatDialogRef<EditQuoteDialogComponent>,
+      @Inject(MAT_DIALOG_DATA) public data: any) {
     this.content = this.data.quote.content;
   }
 
@@ -27,14 +27,14 @@ export class EditQuoteDialogComponent {
 
     this.progress = true;
     this.appService.edit(this.data.quote.id, {content: this.content})
-      .then(() => {
-        this.progress = false;
-        this.dialogRef.close();
-      })
-      .catch(() => {
-        this.progress = false;
-        this.error = 'An error occurred.';
-      });
+        .then(() => {
+          this.progress = false;
+          this.dialogRef.close();
+        })
+        .catch(() => {
+          this.progress = false;
+          this.error = 'An error occurred.';
+        });
   }
 
   onNoClick(): void {

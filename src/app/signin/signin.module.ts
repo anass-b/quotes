@@ -27,7 +27,7 @@ const routes: Routes = [
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes, {useHash: true}),
     HttpClientModule,
     BrowserAnimationsModule,
     FormsModule,
@@ -47,4 +47,5 @@ const routes: Routes = [
     SigninComponent
   ]
 })
-export class SigninModule { }
+export class SigninModule {
+}

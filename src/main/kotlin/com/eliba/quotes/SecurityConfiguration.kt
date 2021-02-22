@@ -30,8 +30,9 @@ class SecurityConfiguration : WebSecurityConfigurerAdapter() {
     override fun configure(http: HttpSecurity) {
         http
             .authorizeRequests()
-            .antMatchers(HttpMethod.POST, "/register").permitAll()
-            .antMatchers("/**").authenticated()
+            .antMatchers(HttpMethod.POST, "/api/register").permitAll()
+            .antMatchers(HttpMethod.POST, "/**").permitAll()
+            .antMatchers("/api/**").authenticated()
             .and()
             .httpBasic()
             .and()

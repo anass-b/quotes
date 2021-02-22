@@ -11,7 +11,7 @@ import java.util.stream.Collectors
 import javax.validation.Valid
 
 @RestController
-@RequestMapping("register")
+@RequestMapping("api/register")
 class RegisterController(
     private val userRepository: UserRepository,
     private val authorityRepository: AuthorityRepository
@@ -33,7 +33,7 @@ class RegisterController(
 }
 
 @RestController
-@RequestMapping("profile")
+@RequestMapping("api/profile")
 class ProfileController(private val userRepository: UserRepository) {
     @GetMapping
     operator fun get(principal: Principal): ProfileDto {
@@ -43,7 +43,7 @@ class ProfileController(private val userRepository: UserRepository) {
 }
 
 @RestController
-@RequestMapping("quotes")
+@RequestMapping("api/quotes")
 class QuotesController(
     private val userRepository: UserRepository,
     private val quoteRepository: QuoteRepository,
@@ -67,7 +67,7 @@ class QuotesController(
     }
 
     @GetMapping("top10")
-    fun top10(): MutableList<QuoteDto>? {
+    fun top10(): List<QuoteDto>? {
         return quoteRepository.top(PageRequest.of(0, 10))
             ?.stream()
             ?.map { x: Quote? -> QuoteDto(x!!) }

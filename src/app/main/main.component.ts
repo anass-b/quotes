@@ -24,23 +24,23 @@ export class MainComponent implements OnInit, OnDestroy {
   private addQuoteDialogRef: MatDialogRef<AddQuoteDialogComponent>;
 
   constructor(
-    private readonly appService: AppService,
-    private readonly dialog: MatDialog,
-    private readonly router: Router) {
+      private readonly appService: AppService,
+      private readonly dialog: MatDialog,
+      private readonly router: Router) {
   }
 
   ngOnInit(): void {
     this.top10Subscription = this.appService.getTop10Observable()
-      .subscribe(top10 => this.top10 = top10);
+        .subscribe(top10 => this.top10 = top10);
 
     this.flop10Subscription = this.appService.getFlop10Observable()
-      .subscribe(flop10 => this.flop10 = flop10);
+        .subscribe(flop10 => this.flop10 = flop10);
 
     this.latestSubscription = this.appService.getLatestObservable()
-      .subscribe(latest => this.latest = latest);
+        .subscribe(latest => this.latest = latest);
 
     this.userSubscription = this.appService.getUserObservable()
-      .subscribe(user => this.user = user);
+        .subscribe(user => this.user = user);
 
     this.fetchAll();
     this.appService.fetchUser();
@@ -63,11 +63,11 @@ export class MainComponent implements OnInit, OnDestroy {
     });
   }
 
-  signout() {
+  signOut() {
     this.appService.signOut()
-      .then(() => {
-        this.router.navigate(['/signin']);
-      });
+        .then(() => {
+          this.router.navigate(['/signin']);
+        });
   }
 
   private fetchAll() {
