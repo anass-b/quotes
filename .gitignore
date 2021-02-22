@@ -1,3 +1,6 @@
+src/main/resources/static/*
+!src/main/resources/static/.keep
+
 dist
 quotes.mv.db
 quotes.trace.db
