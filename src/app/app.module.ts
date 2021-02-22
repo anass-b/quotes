@@ -3,8 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MainModule } from './main/main.module';
-import { SigninModule } from './signin/signin.module';
-import { SignupModule } from './signup/signup.module';
+import { SignInModule } from './signin/sign-in.module';
+import { SignUpModule } from './signup/sign-up.module';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -22,8 +22,8 @@ const routes: Routes = [
     RouterModule.forRoot(routes, {useHash: true}),
     BrowserAnimationsModule,
     MainModule,
-    SigninModule,
-    SignupModule,
+    SignInModule,
+    SignUpModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

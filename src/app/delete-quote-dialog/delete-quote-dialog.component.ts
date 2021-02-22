@@ -20,7 +20,7 @@ export class DeleteQuoteDialogComponent {
     this.quote = this.data.quote;
   }
 
-  onOkClick() {
+  onOkClick(): void {
     this.progress = true;
     this.appService.delete(this.data.quote.id)
         .then(() => {

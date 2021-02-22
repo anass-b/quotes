@@ -22,11 +22,14 @@ import { QuoteItemComponent } from '../quote-item/quote-item.component';
 import { EditQuoteDialogComponent } from '../edit-quote-dialog/edit-quote-dialog.component';
 import { DeleteQuoteDialogComponent } from '../delete-quote-dialog/delete-quote-dialog.component';
 import { TruncatePipe } from '../truncate.pipe';
+import { AuthGuard } from '../auth.guard';
+import { NotFoundComponent } from '../not-found/not-found.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: MainComponent
+    component: MainComponent,
+    canActivate: [AuthGuard],
   }
 ];
 
@@ -61,6 +64,7 @@ const routes: Routes = [
     EditQuoteDialogComponent,
     DeleteQuoteDialogComponent,
     QuoteItemComponent,
+    NotFoundComponent,
     TruncatePipe
   ]
 })

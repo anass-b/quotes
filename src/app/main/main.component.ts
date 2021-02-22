@@ -53,24 +53,24 @@ export class MainComponent implements OnInit, OnDestroy {
     this.userSubscription.unsubscribe();
   }
 
-  reload() {
+  reload(): void {
     this.fetchAll();
   }
 
-  addQuote() {
+  addQuote(): void {
     this.addQuoteDialogRef = this.dialog.open(AddQuoteDialogComponent, {
       width: '350px'
     });
   }
 
-  signOut() {
+  signOut(): void {
     this.appService.signOut()
         .then(() => {
           this.router.navigate(['/signin']);
         });
   }
 
-  private fetchAll() {
+  private fetchAll(): void {
     this.appService.fetchTop10();
     this.appService.fetchFlop10();
     this.appService.fetchLatest();

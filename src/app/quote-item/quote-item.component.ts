@@ -26,11 +26,11 @@ export class QuoteItemComponent implements OnInit {
       private readonly dialog: MatDialog) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.loadChart();
   }
 
-  loadChart() {
+  loadChart(): void {
     this.appService.voteHistory(this.quote.id, this.chartUnit, this.chartLimit)
         .then((history: VoteHistoryItem[]) => {
           const config = {
@@ -73,30 +73,30 @@ export class QuoteItemComponent implements OnInit {
         });
   }
 
-  downvote(event: MouseEvent, quoteId: string) {
+  downvote(event: MouseEvent, quoteId: string): void {
     event.stopPropagation();
     this.appService.downvote(quoteId);
   }
 
-  upvote(event: MouseEvent, quoteId: string) {
+  upvote(event: MouseEvent, quoteId: string): void {
     event.stopPropagation();
     this.appService.upvote(quoteId);
   }
 
-  editQuote(quote: Quote) {
+  editQuote(quote: Quote): void {
     this.editQuoteDialogRef = this.dialog.open(EditQuoteDialogComponent, {
       width: '350px',
       data: {
-        quote: quote
+        quote
       }
     });
   }
 
-  deleteQuote(quote: Quote) {
+  deleteQuote(quote: Quote): void {
     this.deleteQuoteDialogRef = this.dialog.open(DeleteQuoteDialogComponent, {
       width: '350px',
       data: {
-        quote: quote
+        quote
       }
     });
   }

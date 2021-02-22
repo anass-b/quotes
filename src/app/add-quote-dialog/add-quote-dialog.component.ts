@@ -22,7 +22,7 @@ export class AddQuoteDialogComponent {
       private readonly dialogRef: MatDialogRef<AddQuoteDialogComponent>) {
   }
 
-  onOkClick() {
+  onOkClick(): void {
     if (!this.content) {
       this.error = 'Field required.';
       return;

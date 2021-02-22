@@ -19,7 +19,7 @@ export class EditQuoteDialogComponent {
     this.content = this.data.quote.content;
   }
 
-  onOkClick() {
+  onOkClick(): void {
     if (!this.content) {
       this.error = 'Field required.';
       return;

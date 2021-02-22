@@ -5,7 +5,7 @@ import { truncate } from './Truncate';
   name: 'truncate'
 })
 export class TruncatePipe implements PipeTransform {
-  transform(value: string, args: number) {
+  transform(value: string, args: number): string {
     return truncate(value, args);
   }
 }

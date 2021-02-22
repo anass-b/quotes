@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { SignupComponent } from './signup.component';
+import { SignUpComponent } from './sign-up.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
@@ -20,7 +20,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 const routes: Routes = [
   {
     path: 'signup',
-    component: SignupComponent
+    component: SignUpComponent
   }
 ];
 
@@ -44,8 +44,8 @@ const routes: Routes = [
     MatCardModule
   ],
   declarations: [
-    SignupComponent
+    SignUpComponent
   ]
 })
-export class SignupModule {
+export class SignUpModule {
 }

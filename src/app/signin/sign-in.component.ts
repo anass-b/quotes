@@ -2,18 +2,18 @@ import { Component } from '@angular/core';
 import { AppService } from '../app.service';
 import { Router } from '@angular/router';
 
-class SigninModel {
+class SignInModel {
   username: string;
   password: string;
 }
 
 @Component({
-  selector: 'app-signin',
-  templateUrl: './signin.component.html',
-  styleUrls: ['./signin.component.scss']
+  selector: 'app-sign-in',
+  templateUrl: './sign-in.component.html',
+  styleUrls: ['./sign-in.component.scss']
 })
-export class SigninComponent {
-  model = new SigninModel();
+export class SignInComponent {
+  model = new SignInModel();
   progress = false;
 
   constructor(
@@ -21,7 +21,7 @@ export class SigninComponent {
       private readonly router: Router) {
   }
 
-  onSubmit() {
+  onSubmit(): void {
     this.progress = true;
     this.appService.signIn(this.model.username, this.model.password)
         .then(() => {
@@ -33,7 +33,7 @@ export class SigninComponent {
         });
   }
 
-  signup() {
+  signUp(): void {
     this.router.navigate(['/signup']);
   }
 }

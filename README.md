@@ -1,4 +1,4 @@
-# Quotes
+# Quotes: Kotlin, Spring Boot and Angular based Quotes Web App
 ## Features
 - Quotes CRUD operations
 - Quote's score chart over time with the ability to change the grouping time unit
@@ -20,6 +20,7 @@
 ./gradlew assemble && npm install && npm run build
 ```
 ## Run ⚡️
+```shell
+java -jar ./build/libs/quotes-1.0.0.jar
 ```
-java -jar ./build-gradle/libs/quotes-1.0.0.jar
-```
+Open browser at: http://localhost:8080

@@ -119,12 +119,12 @@ class QuotesController(
     }
 
     @GetMapping("latest")
-    fun latest(): ResponseEntity<QuoteDto> {
+    fun latest(): ResponseEntity<*> {
         val latest = quoteRepository.findTopByOrderByCreatedAtDesc()
         return if (latest != null) {
             ResponseEntity(QuoteDto(latest), HttpStatus.OK)
         } else {
-            ResponseEntity(HttpStatus.NOT_FOUND)
+            ResponseEntity<Any>(null, HttpStatus.OK)
         }
     }
 

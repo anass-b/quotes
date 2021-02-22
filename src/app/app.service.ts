@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Quote } from './dtos/Quote';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { CreateQuote } from './dtos/CreateQuote';
@@ -11,11 +11,15 @@ import { EditQuote } from './dtos/EditQuote';
 import { Router } from '@angular/router';
 import { Register } from './dtos/Register';
 
+interface Headers {
+  headers: HttpHeaders;
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class AppService {
-  private static readonly USER_SESSION_KEY = 'user';
+  private static readonly USER_LOCAL_STORAGE_KEY = 'user';
   private top10: Subject<Quote[]> = new Subject<Quote[]>();
   private flop10: Subject<Quote[]> = new Subject<Quote[]>();
   private latest: Subject<Quote> = new Subject<Quote>();
@@ -26,37 +30,37 @@ export class AppService {
       private readonly router: Router) {
   }
 
-  getTop10Observable() {
+  getTop10Observable(): Observable<Quote[]> {
     return this.top10.asObservable();
   }
 
-  getFlop10Observable() {
+  getFlop10Observable(): Observable<Quote[]> {
     return this.flop10.asObservable();
   }
 
-  getLatestObservable() {
+  getLatestObservable(): Observable<Quote> {
     return this.latest.asObservable();
   }
 
-  getUserObservable() {
+  getUserObservable(): Observable<User> {
     return this.user.asObservable();
   }
 
-  fetchTop10() {
+  fetchTop10(): void {
     this.httpClient.get<Quote[]>(`${environment.apiUrl}/quotes/top10`, this.getHeaders())
         .toPromise()
         .then(quotes => this.top10.next(quotes))
         .catch(error => this.handleAuthError(error));
   }
 
-  fetchFlop10() {
+  fetchFlop10(): void {
     this.httpClient.get<Quote[]>(`${environment.apiUrl}/quotes/flop10`, this.getHeaders())
         .toPromise()
         .then(quotes => this.flop10.next(quotes))
         .catch(error => this.handleAuthError(error));
   }
 
-  fetchLatest() {
+  fetchLatest(): void {
     this.httpClient.get<Quote>(`${environment.apiUrl}/quotes/latest`, this.getHeaders())
         .toPromise()
         .then(quote => this.latest.next(quote))
@@ -66,7 +70,7 @@ export class AppService {
         });
   }
 
-  fetchUser() {
+  fetchUser(): void {
     this.user.next(this.getUser());
   }
 
@@ -83,14 +87,14 @@ export class AppService {
     });
   }
 
-  upvote(quoteId: string) {
+  upvote(quoteId: string): void {
     this.httpClient.post(`${environment.apiUrl}/quotes/${quoteId}/upvote`, null, this.getHeaders())
         .toPromise()
         .then(() => this.fetchAll())
         .catch(error => this.handleAuthError(error));
   }
 
-  downvote(quoteId: string) {
+  downvote(quoteId: string): void {
     this.httpClient.post(`${environment.apiUrl}/quotes/${quoteId}/downvote`, null, this.getHeaders())
         .toPromise()
         .then(() => this.fetchAll())
@@ -153,15 +157,15 @@ export class AppService {
       const headers = new HttpHeaders({
         authorization: 'Basic ' + token
       });
-      return this.httpClient.get(`${environment.apiUrl}/profile`, {headers: headers})
+      return this.httpClient.get(`${environment.apiUrl}/profile`, {headers})
           .toPromise()
           .then((profile: Profile) => {
             const user: User = {
-              profile: profile,
-              token: token
+              profile,
+              token
             };
             this.user.next(user);
-            sessionStorage.setItem(AppService.USER_SESSION_KEY, JSON.stringify(user));
+            localStorage.setItem(AppService.USER_LOCAL_STORAGE_KEY, JSON.stringify(user));
             resolve();
           })
           .catch(error => reject(error));
@@ -173,11 +177,11 @@ export class AppService {
       return this.httpClient.get(`${environment.apiUrl}/logout`, this.getHeaders())
           .toPromise()
           .then(() => {
-            sessionStorage.setItem(AppService.USER_SESSION_KEY, null);
+            localStorage.setItem(AppService.USER_LOCAL_STORAGE_KEY, null);
             resolve();
           })
           .catch(error => {
-            sessionStorage.setItem(AppService.USER_SESSION_KEY, null);
+            localStorage.setItem(AppService.USER_LOCAL_STORAGE_KEY, null);
             console.error(error);
             resolve();
           });
@@ -185,23 +189,19 @@ export class AppService {
   }
 
   public getUser(): User {
-    const user = JSON.parse(sessionStorage.getItem(AppService.USER_SESSION_KEY));
-    if (!user) {
-      this.router.navigate(['/signin']);
-    }
-    return user;
+    return JSON.parse(localStorage.getItem(AppService.USER_LOCAL_STORAGE_KEY));
   }
 
-  private handleAuthError(error: HttpErrorResponse) {
+  private handleAuthError(error: HttpErrorResponse): void {
     if (error.status === 401) {
       this.router.navigate(['/signin']);
     }
   }
 
-  private getHeaders() {
+  private getHeaders(): Headers {
     const user: User = this.getUser();
     if (!user) {
-      return;
+      return null;
     }
     return {
       headers: new HttpHeaders({
@@ -210,7 +210,7 @@ export class AppService {
     };
   }
 
-  private fetchAll() {
+  private fetchAll(): void {
     this.fetchTop10();
     this.fetchFlop10();
     this.fetchLatest();
