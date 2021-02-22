@@ -1,3 +1,6 @@
+.vscode
+.mvn
+
 *.db
 /target/
 !.mvn/wrapper/maven-wrapper.jar

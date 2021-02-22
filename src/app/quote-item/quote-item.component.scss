@@ -1,0 +1,58 @@
+.quote-panel-header {
+  .quote-vote-btn {
+    display: flex;
+    order: 1;
+    margin-right: 10px;
+    flex-shrink: 0;
+    font-size: smaller;
+    padding: 0 10px 0 10px;
+    justify-content: center;
+
+    .icon {
+      font-size: 18px;
+    }
+
+    .quote-votes {
+      min-width: 60px;
+      display: inline-block;
+    }
+
+    .quote-votes-neutral {
+      color: gray;
+    }
+
+    .quote-votes-positive {
+      color: forestgreen;
+    }
+
+    .quote-votes-negative {
+      color: indianred;
+    }
+  }
+
+  .quote-title {
+    display: flex;
+    order: 3;
+    align-items: center;
+    max-width: 100%;
+    overflow: hidden;
+  }
+}
+
+.truncate-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chart {
+  height:400px;
+  width: content-box;
+}
+
+.chart-options-form {
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+  margin-bottom: 10px;
+}

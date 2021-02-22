@@ -1,0 +1,18 @@
+<div class="signin">
+  <mat-card>
+    <mat-card-title>Sign in</mat-card-title>
+    <mat-card-content>
+      <form class="signin-form" (ngSubmit)="onSubmit()" #signinForm="ngForm">
+        <mat-form-field>
+          <input matInput [(ngModel)]="model.username" #username="ngModel" name="username" placeholder="Username" [disabled]="progress" required>
+          <mat-error [hidden]="username.valid || username.pristine">Username is required</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput [(ngModel)]="model.password" #password="ngModel" name="password" type="password" placeholder="Password" [disabled]="progress" required>
+        </mat-form-field>
+        <button mat-flat-button color="primary" [disabled]="progress">Sign in</button>
+      </form>
+      <button mat-flat-button class="signup-btn" (click)="signup()" [disabled]="progress">Sign up</button>
+    </mat-card-content>
+  </mat-card>
+</div>

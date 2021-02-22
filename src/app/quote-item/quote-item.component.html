@@ -1,0 +1,54 @@
+<mat-expansion-panel>
+  <mat-expansion-panel-header class="quote-panel-header">
+    <button (click)="upvote($event, quote.id)" class="quote-vote-btn" mat-stroked-button>
+      <i class="far fa-thumbs-up icon"></i>
+      <span class="quote-votes"
+            [class.quote-votes-neutral]="quote.upvotes === '0'"
+            [class.quote-votes-positive]="quote.upvotes !== '0'">
+        {{quote.upvotes}}
+      </span>
+    </button>
+    <button (click)="downvote($event, quote.id)" class="quote-vote-btn" mat-stroked-button>
+      <i class="far fa-thumbs-down icon"></i>
+      <span class="quote-votes"
+            [class.quote-votes-neutral]="quote.downvotes === '0'"
+            [class.quote-votes-negative]="quote.downvotes !== '0'">
+        {{quote.downvotes}}
+      </span>
+    </button>
+    <div class="quote-votes">
+
+
+    </div>
+    <div class="quote-title">
+      <span class="truncate-text">{{quote.content}}</span>
+    </div>
+  </mat-expansion-panel-header>
+  <mat-card>
+    <mat-card-content>
+      <div class="chart-options-form">
+        <mat-form-field>
+          <input [(ngModel)]="chartLimit" matInput (change)="loadChart()" placeholder="Last">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select [(ngModel)]="chartUnit" placeholder="Unit" (selectionChange)="loadChart()">
+            <mat-option value="year">Years</mat-option>
+            <mat-option value="month">Months</mat-option>
+            <mat-option value="week">Weeks</mat-option>
+            <mat-option value="day">Days</mat-option>
+            <mat-option value="hour">Hours</mat-option>
+            <mat-option value="minute">Minutes</mat-option>
+            <mat-option value="second">Seconds</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="chart">
+        <canvas #chartCanvas class="chart"></canvas>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button (click)="editQuote(quote)" *ngIf="canEdit">Edit</button>
+      <button mat-button (click)="deleteQuote(quote)" *ngIf="canDelete" color="warn">Delete</button>
+    </mat-card-actions>
+  </mat-card>
+</mat-expansion-panel>

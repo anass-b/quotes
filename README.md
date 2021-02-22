@@ -5,6 +5,7 @@ https://polar-shore-41051.herokuapp.com/swagger-ui.html
 https://polar-shore-41051.herokuapp.com
 ## Features
 - Quotes CRUD operations
+- Quote's score chart over time with the ability to change the grouping time unit
 - User registration
 - User profile endpoint
 - Basic Authentication
@@ -15,9 +16,12 @@ https://polar-shore-41051.herokuapp.com
 - Spring Data
 - Postgres
 - Swagger
+- Angular 6
+- RxJS
+- Chart.js
 ## Build
 ```
-mvn clean install
+mvn clean install && npm install && npm run postinstall
 ```
 ## Run
 ```

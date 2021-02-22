@@ -1,0 +1,20 @@
+.accordion-align-headers .mat-expansion-panel-header-title,
+.accordion-align-headers .mat-expansion-panel-header-description {
+  flex-basis: 0;
+}
+
+.accordion-align-headers .mat-expansion-panel-header-description {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.toolbar-spacer {
+  flex: 1 1 auto;
+}
+
+.profile-form {
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  max-width: 350px;
+}

@@ -1,0 +1,44 @@
+<mat-toolbar color="primary">
+  <span>Quotes</span>
+  <span class="toolbar-spacer"></span>
+  <button (click)="addQuote()" mat-icon-button>
+    <mat-icon aria-label="Add quote">add</mat-icon>
+  </button>
+  <button (click)="reload()" mat-icon-button color="white">
+    <mat-icon aria-label="Refresh">refresh</mat-icon>
+  </button>
+  <button mat-button *ngIf="user" [matMenuTriggerFor]="menu">{{user.profile.fullName}}</button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="signout()">Sign out</button>
+  </mat-menu>
+</mat-toolbar>
+
+<mat-tab-group selectedIndex="1">
+  <mat-tab label="Profile">
+    <div class="profile-form">
+      <mat-form-field>
+        <input matInput value="{{user.profile.fullName}}" placeholder="Full name" disabled>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput value="{{user.profile.username}}" placeholder="Username" disabled>
+      </mat-form-field>
+    </div>
+  </mat-tab>
+  <mat-tab label="Top 10">
+    <mat-accordion *ngFor="let quote of top10" class="accordion-align-headers">
+      <app-quote-item [quote]="quote"></app-quote-item>
+    </mat-accordion>
+  </mat-tab>
+  <mat-tab label="Flop 10">
+    <mat-accordion *ngFor="let quote of flop10" class="accordion-align-headers">
+      <app-quote-item [quote]="quote"></app-quote-item>
+    </mat-accordion>
+  </mat-tab>
+  <mat-tab label="Latest">
+    <mat-list>
+      <mat-accordion *ngIf="latest" class="accordion-align-headers">
+        <app-quote-item [quote]="latest"></app-quote-item>
+      </mat-accordion>
+    </mat-list>
+  </mat-tab>
+</mat-tab-group>

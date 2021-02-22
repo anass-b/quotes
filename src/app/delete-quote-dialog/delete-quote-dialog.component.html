@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>Delete Quote</h1>
+<div mat-dialog-content>
+  <p class="warning">Are you sure to delete the quote "{{quote.content | truncate:20}}"?</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()" [disabled]="progress">Cancel</button>
+  <button mat-button (click)="onOkClick()" color="warn" [disabled]="progress">Delete</button>
+</div>
