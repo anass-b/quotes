@@ -10,7 +10,7 @@
 ## Technologies
 - Spring Boot
 - Spring Data
-- Postgres/H2
+- H2/MySQL/Postgres
 - Swagger
 - Angular
 - RxJS
