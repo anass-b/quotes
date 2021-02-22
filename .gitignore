@@ -1,5 +1,7 @@
-node_modules
+quotes.mv.db
+quotes.trace.db
 .idea
+node_modules
 
 # https://github.com/github/gitignore/blob/master/Gradle.gitignore
 

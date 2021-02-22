@@ -1,8 +1,4 @@
-# Quotes Web API
-## REST API reference
-https://polar-shore-41051.herokuapp.com/swagger-ui.html
-## Live API
-https://polar-shore-41051.herokuapp.com
+# Quotes
 ## Features
 - Quotes CRUD operations
 - Quote's score chart over time with the ability to change the grouping time unit
@@ -19,11 +15,11 @@ https://polar-shore-41051.herokuapp.com
 - Angular
 - RxJS
 - Chart.js
-## Build
+## Build 🔨
+```shell
+./gradlew assemble && npm install && npm run build
 ```
-gradle assemble && npm install && npm run build
+## Run ⚡️
 ```
-## Run
-```
-mvn spring-boot:run
+java -jar ./build-gradle/libs/quotes-1.0.0.jar
 ```
