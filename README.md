@@ -1,11 +1,7 @@
-# Quotes: Kotlin, Spring Boot and Angular based Quotes Web App
+# Quotes: Kotlin, Spring Boot, Angular, Chart.js Quote Voting Web App
 ## Features
-- Quotes CRUD operations
+- Upvote/Downvote a quote
 - Quote's score chart over time with the ability to change the grouping time unit
-- User registration
-- User profile endpoint
-- Basic Authentication
-- Only the quote owner can edit or delete a quote
 - Vote history with grouping options with different time units
 ## Technologies
 - Spring Boot
