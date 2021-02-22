@@ -23,7 +23,7 @@ export class SignupComponent {
 
   onSubmit() {
     this.progress = true;
-    this.appService.signup({
+    this.appService.signUp({
       fullName: this.model.fullName,
       username: this.model.username,
       password: this.model.password

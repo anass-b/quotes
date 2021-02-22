@@ -141,12 +141,12 @@ export class AppService {
     });
   }
 
-  signup(register: Register): Promise<Object> {
-    return this.httpClient.post(`${environment.apiUrl}/register`, register, this.getHeaders())
+  signUp(register: Register): Promise<void> {
+    return this.httpClient.post<void>(`${environment.apiUrl}/register`, register, this.getHeaders())
       .toPromise();
   }
 
-  signin(username: string, password: string): Promise<void> {
+  signIn(username: string, password: string): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       const token = btoa(username + ':' + password);
       const headers = new HttpHeaders({
@@ -167,8 +167,8 @@ export class AppService {
     });
   }
 
-  signout(): Promise<Object> {
-    return new Promise<Object>((resolve, reject) => {
+  signOut(): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
       return this.httpClient.get(`${environment.apiUrl}/logout`, this.getHeaders())
         .toPromise()
         .then(() => {

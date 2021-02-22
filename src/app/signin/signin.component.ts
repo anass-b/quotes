@@ -22,7 +22,7 @@ export class SigninComponent {
 
   onSubmit() {
     this.progress = true;
-    this.appService.signin(this.model.username, this.model.password)
+    this.appService.signIn(this.model.username, this.model.password)
       .then(() => {
         this.progress = false;
         this.router.navigate(['/']);

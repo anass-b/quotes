@@ -11,17 +11,17 @@ https://polar-shore-41051.herokuapp.com
 - Basic Authentication
 - Only the quote owner can edit or delete a quote
 - Vote history with grouping options with different time units
-## Stack
-- Spring Boot 2
+## Technologies
+- Spring Boot
 - Spring Data
-- Postgres
+- Postgres/H2
 - Swagger
-- Angular 6
+- Angular
 - RxJS
 - Chart.js
 ## Build
 ```
-mvn clean install && npm install && npm run postinstall
+gradle assemble && npm install && npm run build
 ```
 ## Run
 ```

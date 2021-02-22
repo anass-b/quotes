@@ -3,7 +3,7 @@ import { Quote } from '../dtos/Quote';
 import { AppService } from '../app.service';
 import { Chart } from 'chart.js';
 import { VoteHistoryItem } from '../dtos/VoteHistoryItem';
-import { MatDialog, MatDialogRef } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { EditQuoteDialogComponent } from '../edit-quote-dialog/edit-quote-dialog.component';
 import { DeleteQuoteDialogComponent } from '../delete-quote-dialog/delete-quote-dialog.component';
 

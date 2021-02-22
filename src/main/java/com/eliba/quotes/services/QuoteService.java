@@ -24,7 +24,7 @@ public class QuoteService {
       "max(v.upvotes) - max(v.downvotes) delta, " +
       "max(v.upvotes) upvotes, " +
       "max(v.downvotes) downvotes FROM " +
-      "vote_snapshots v WHERE quote_id = :quoteId GROUP BY 1 ORDER BY createdAt DESC LIMIT :limit", Tuple.class);
+      "vote_snapshots v WHERE quote_id = :quoteId GROUP BY 1 ORDER BY createdAt DESC GROUP BY createdAt LIMIT :limit", Tuple.class);
 
     query.setParameter("quoteId", quoteId);
     query.setParameter("limit", limit);

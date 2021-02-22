@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Quote } from '../dtos/Quote';
 import { Subscription } from 'rxjs';
-import { MatDialog, MatDialogRef } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { AddQuoteDialogComponent } from '../add-quote-dialog/add-quote-dialog.component';
 import { AppService } from '../app.service';
 import { User } from '../User';
@@ -64,7 +64,7 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   signout() {
-    this.appService.signout()
+    this.appService.signOut()
       .then(() => {
         this.router.navigate(['/signin']);
       });
