@@ -1,5 +1,5 @@
 # Quotes - Kotlin, Spring Boot, Angular Material, Chart.js Quote Voting Web App
-![](./docs/screenshot.png?)
+![](./docs/screenshot.png)
 ## Features
 - Upvote/Downvote a quote
 - Quote's score chart over time with the ability to change the grouping time unit
