@@ -1,4 +1,4 @@
-# Kotlin, Spring Boot, Angular Material, Chart.js based Quote Voting Web App
+# Kotlin, Spring Boot, Angular Material and Chart.js based Quote Voting Web App
 ![](./docs/screenshot.png)
 ## Features
 - Upvote/Downvote a quote
