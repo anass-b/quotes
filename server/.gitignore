@@ -1,11 +1,9 @@
+.idea
 src/main/resources/static/*
 !src/main/resources/static/.keep
-
-dist
+node_modules
 quotes.mv.db
 quotes.trace.db
-.idea
-node_modules
 
 # https://github.com/github/gitignore/blob/master/Gradle.gitignore
 

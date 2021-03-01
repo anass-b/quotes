@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --prod && rm -rf ./src/main/resources/static/* && cp -R ./dist/quotes/* ./src/main/resources/static",
+    "build": "ng build --prod && rm -rf ../server/src/main/resources/static/* && cp -R ./dist/quotes/* ../server/src/main/resources/static",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
