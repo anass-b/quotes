@@ -1,4 +1,5 @@
-# Kotlin, Spring Boot, Angular Material and Chart.js based Quote Voting Web App
+# Quotes
+Quotes is a voting sample application based on Kotlin, Spring, Angular and Chart.js
 ![](./docs/screenshot.png)
 ## Features
 - Upvote/Downvote a quote
